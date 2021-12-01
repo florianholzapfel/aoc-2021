@@ -11,30 +11,24 @@ fun <T> window(list: List<T>, size: Int): List<List<T>> {
 
 fun main() {
     fun part1(input: List<Int>): Int {
-        var counter = 0
-        var prevNUmber = 0
-        input.forEach {
-            if (prevNUmber != 0 && it > prevNUmber) {
-                counter += 1
+        return input.foldIndexed(0) { idx, acc, element ->
+            if (idx > 0 && element > input[idx-1]) {
+                acc + 1
+            } else {
+                acc
             }
-            prevNUmber = it
         }
-        return counter
     }
 
     fun part2(input: List<Int>): Int {
-        var counter = 0
-        var prevNUmber = 0
-        val windows = window(input, 3)
-        windows.forEach {
-            val s = it.sum()
-            if (prevNUmber != 0 && s > prevNUmber) {
-                counter += 1
+        val list = window(input, 3)
+        return list.foldIndexed(0) { idx, acc, element ->
+            if (idx > 0 && element.sum() > list[idx-1].sum()) {
+                acc + 1
+            } else {
+                acc
             }
-
-            prevNUmber = s
         }
-        return counter
     }
 
     val input = readInput("Day01").map { it.toInt() }
