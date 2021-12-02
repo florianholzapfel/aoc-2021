@@ -4,7 +4,7 @@ fun main() {
     }
 
     fun part2(input: List<Int>): Int {
-        return part1(input.windowed(3).map { it.sum() })
+        return part1(input.windowed(3) { it.sum() })
     }
 
     val input = readInput("Day01").map { it.toInt() }
