@@ -1,24 +1,26 @@
 import kotlin.math.abs
 
 fun main() {
-    fun part1(input: List<String>): Int {
+    fun moveCrabs(input: List<String>, calculateFuel: (crab: Int, pos: Int) -> Int): Int {
         val crabs = input.first().split(",").map { it.toInt() }
         val max = crabs.maxOrNull() ?: 0
-        return (0..max).map { pos ->
-            crabs.map {
-                abs(it - pos)
-            }.sum()
-        }.minOrNull() ?: 0
+        return (0..max).minOfOrNull { pos ->
+            crabs.sumOf {
+                calculateFuel(it, pos)
+            }
+        } ?: 0
+    }
+
+    fun part1(input: List<String>): Int {
+        return moveCrabs(input){ crab, pos ->
+            abs(crab - pos)
+        }
     }
 
     fun part2(input: List<String>): Int {
-        val crabs = input.first().split(",").map { it.toInt() }
-        val max = crabs.maxOrNull() ?: 0
-        return (0..max).map { pos ->
-            crabs.map {
-                (1..abs(it - pos)).sum()
-            }.sum()
-        }.minOrNull() ?: 0
+        return moveCrabs(input){ crab, pos ->
+            (1..abs(crab - pos)).sum()
+        }
     }
 
     // test if implementation meets criteria from the description, like:
